@@ -1,100 +1,81 @@
-# IPA Project (Spring 2025)
+# RISC-V Processor
 
-*Total Marks: 100*  
+This repository contains the implementation of a **RISC-V Processor**, designed to execute a subset of the RISC-V instruction set architecture (ISA). The project includes Verilog HDL implementation, testbenches, and simulations for verification.
 
----
+## Features
+- Implements a **5-stage pipeline** (IF, ID, EX, MEM, WB)
+- Supports **RV32I base integer instruction set**
+- **Hazard detection** and forwarding mechanisms
+- **Branch prediction** for performance optimization
+- Simulation and verification using **Verilog testbenches**
 
-### Note:
-1. In the Instruction Fetch stage:
-      The MUX is just there, nothing to do with the functionality of IF stage for now, the select signal for the mux will be useful after the instruction is decoded and if it's a branch instruction then we have to use the zero output of the alu to get the select signal.
-2. 
+## Project Structure
+```
+├── src/                 # Source code for the processor
+│   ├── alu.v            # Arithmetic Logic Unit
+│   ├── control_unit.v   # Control Unit
+│   ├── datapath.v       # Datapath
+│   ├── register_file.v  # Register File
+│   ├── memory.v         # Memory Module
+│   └── processor.v      # Top-level Processor Module
+├── test/                # Testbench files
+│   ├── processor_tb.v   # Processor testbench
+│   ├── alu_tb.v         # ALU testbench
+│   └── memory_tb.v      # Memory testbench
+├── README.md            # Project documentation
+└── LICENSE              # License information
+```
 
+## Getting Started
+### Prerequisites
+- **Verilog Simulator** (e.g., ModelSim, Icarus Verilog, Vivado)
+- **Git** for version control
+- **RISCV-GCC Toolchain** (for compiling RISC-V assembly programs)
 
-## 1. Overall Goal
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/MadhanSaiKrishna/RISC-V-Processor.git
+   cd RISC-V-Processor
+   ```
+2. Set up the RISC-V toolchain (if needed) to compile and test programs.
 
-Each group is required to develop a processor architecture design based on the *RISC-V ISA* using *Verilog*. The design must be thoroughly tested through simulations to ensure it meets all specification requirements. The project submission must include the following:
+### Running the Simulation
+1. Open a terminal and navigate to the testbench directory:
+   ```sh
+   cd test
+   ```
+2. Run the testbench using your Verilog simulator:
+   ```sh
+   iverilog -o processor_tb.out processor_tb.v ../src/*.v
+   vvp processor_tb.out
+   ```
+3. View waveforms using GTKWave (if enabled in the testbench):
+   ```sh
+   gtkwave processor_tb.vcd
+   ```
 
-- *Report*: A detailed description of the design, including the various stages of the processor architecture, supported features (with simulation snapshots), and challenges encountered.
-- *Verilog Code*: The processor design and testbench code.
+## Supported Instructions
+The processor currently supports the following RISC-V **RV32I** instructions:
+- **Arithmetic**: ADD, SUB, AND, OR, XOR, SLL, SRL, SRA
+- **Load/Store**: LW, SW
+- **Branch**: BEQ, BNE, BLT, BGE
+- **Immediate Operations**: ADDI, ANDI, ORI
 
----
+## Contributing
+Contributions are welcome! If you find issues or have improvements, please:
+1. Fork the repository
+2. Create a new branch (`feature-xyz`)
+3. Commit your changes
+4. Open a Pull Request
 
-## 2. Specifications
+## License
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
-The processor design must meet the following specifications:
-
-### Minimum Requirements:
-- *Sequential Design*: A bare minimum processor architecture implementing a sequential design.
-
-### Advanced Requirements:
-- *Pipelined Design*: A 5-stage pipelined processor architecture with support for eliminating pipeline hazards.
-
-*Note*: Your submission must at least include the sequential design to receive minimal marks. However, the goal is to submit a pipelined architecture.
-
-### Supported Instructions:
-Both implementations (sequential and pipelined) must execute the following RISC-V ISA instructions:
-- add
-- sub
-- and
-- or
-- ld
-- sd
-- beq
-
----
-
-## 3. Design Approach
-
-The design should follow a *modular approach*:
-- Each stage of the processor should be coded as a separate module.
-- Test each module independently to ensure proper functionality before integration.
-- This approach will help minimize issues during the integration phase.
-
----
-
-## 4. Targets and Evaluation
-
-The project will be evaluated twice:
-
-1. *First Evaluation (February 24, 2025)*:
-   - Expected completion: Sequential implementation.
-
-2. *Final Evaluation (First week of March 2025)*:
-   - Dates will be announced later.
-
----
-
-## 5. Suggestions for Design Verification
-
-To ensure the correctness of your design, follow these verification approaches:
-
-1. *Module Testing*:
-   - Test each stage/module individually with specific test inputs to verify its functionality.
-
-2. *Assembly Program Testing*:
-   - Write an assembly program for an algorithm (e.g., sorting algorithm) using the RISC-V ISA.
-   - Encode the instructions and use them to test your integrated design.
-
-3. *Automated Testbench* (Optional but recommended):
-   - Develop an automated testbench to verify the state of the processor and memory after each instruction execution.
+## Contact
+For any queries or discussions, feel free to open an issue or reach out via GitHub!
 
 ---
 
-## 6. Evaluation Criteria
+Happy Coding! 🚀
 
-Marks will be assigned as follows:
-
-| *Component*                     | *Marks* |
-|------------------------------------|-----------|
-| Report                             | 10        |
-| Assignment                         | 15        |
-| First Evaluation                   | 15        |
-| Sequential Design Implementation   | 20        |
-| Pipelined Design Implementation    | 40        |
-
----
-
-## Contributors:
-Roshan Kondabattini  
-Chamarthy Madhan Sai Krishna  
-Kaamya Dasika
